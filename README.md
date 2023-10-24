@@ -14,6 +14,9 @@
 
 6. sort: 排序算法
 
+想要更清楚的了解数据的变化等内容可以访问： https://visualgo.net/zh/
+
+想要了解AVL(平衡二叉树)可以访问： https://www.cs.usfca.edu/~galles/visualization/AVLtree.html   (旧金山大学的各种数据类型)
 
 正在更新.....
 
