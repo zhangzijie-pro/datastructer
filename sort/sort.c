@@ -108,6 +108,64 @@ void SelectSort(int A[],int n){
     }
 }
 
+// 将以k为根的子树进行调整
+void HeadAdjust(int A[],int k,int len){
+    A[0]=A[k];          // A[0]暂存根结点
+    for(int i=2*k;i<=len;i*=2){ // 沿k较大的子节点向下筛选
+        if(i<len&&A[i]<A[i+1])
+            i++;                // 取k较大的子节点的下标
+        if(A[0]>=A[i]) break;   // 筛选结果
+        else{
+            A[k]=A[i];          // 将A[i]调整为双亲结点上
+            k=i;                // 修改k值， 以便继续向下筛选
+        }
+    }
+    A[k]=A[0];                  // 被筛选的值放入最终结点
+}
+
+// 建立大根堆
+void BuildMaxHeap(int A[],int len){
+    for(int i=len/2;i>0;i--){     // 从后往前调整所有非终端结点
+        HeadAdjust(A,i,len);
+    }
+}
+
+// 堆排序
+void HeapSort(int A[],int len){
+    BuildMaxHeap(A,len);
+    for(int i=len;i>1;i--){
+        swap(A[i],A[1]);
+        HeadAdjust(A,1,i-1);
+    }
+}
+
+// 归并排序
+
+
+void Merge(int A[],int low,int mid,int high){
+    int i,j,k;
+    int *B = (int *)malloc(100*sizeof(int));
+    for(k=low;k<=high;k++){
+        B[k]=A[k];
+    }
+    for(i=low,j=mid+1,k=i;i<=mid&&j<=high;k++){
+        if(B[i]<=B[j])
+            A[k]=B[i++];
+        else    
+            A[k]=B[j++];
+    }
+    while(j<=mid) A[k++]=B[i++];
+    while(j<=high) A[k++]=B[j++];
+} 
+
+void MergeSort(int A[],int low,int high){
+    if(low<high){
+        int mid=(low+high)/2;       // 从中间划分
+        MergeSort(A,low,mid);       // 从左边划分归并排序
+        MergeSort(A,mid+1,high);    // 从右边划分归并排序
+        Merge(A,low,mid,high);      // 归并
+    }
+}
 
 int main(){
     int str[]={2,1,5,4,7};
